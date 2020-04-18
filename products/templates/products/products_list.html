@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}eCommerce{% endblock %}
+
+{% block content %}
+
+<!-- <h2><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></h2>
+{% if  product.available %}
+<p>{{product.title}} is available.</p>
+{% else %}
+<p>{{product.title}} is current unavailable.</p>
+{% endif %}
+<p>Price is {{product.price}} rupees. </p>
+{% if product.image %}
+<img class="img-fluid" height="200px" src="{{product.image.url}}" alt="Image Unable to Load.">
+{% endif %} -->
+<div class="container-fluid">
+<div class="row">
+        {% for product in object_list %}
+        <div class=" container my-3 mx-3 col-sm-6 col-md-3 col-lg-2 card" style="width: 18rem;">
+            <img src="{{product.image.url}}" class="card-img-top" alt="Image Unable to Load.">
+            <div class="card-body">
+              <h5 class="card-title">{{product.title|title}}</h5>
+              <p>Cost at ₹ <span style="color: brown; font-kerning: auto; ">{{product.price}}</span></p>
+              <p class="card-text text-secondar">{{product.description|truncatechars:50}}</p>
+              <a href="{{ product.get_absolute_url }}" class="btn btn-danger">View {{product.title|title}}</a>
+            </div>
+          </div>
+          {% endfor %}
+</div>
+</div>
+{% endblock %}

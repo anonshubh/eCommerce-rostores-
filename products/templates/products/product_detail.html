@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+<h2 style="color: red;" >{{ product.title|title }}</h2>
+{% if product.available %}
+<p style="background-color: aquamarine; text-align: center;" >In Stock</p>
+{% else %}
+<p style="background-color: cornsilk; text-align: center;">{{product.title|title}} is currently unavailable.</p>
+{% endif %}
+
+<h4>Cost at ₹ <span style="color: brown; font-size: xx-large; ">{{product.price}}</span></h4>
+
+{% if product.image %}
+<img class="img-fluid" src="{{product.image.url}}" alt="Image Unable to Load.">
+{% endif %}
+
+<p class="text-info">{{product.description}}</p>
+</div>
+{% endblock %}
