@@ -20,8 +20,9 @@ class Product(models.Model):
     slug = models.SlugField(unique=True,editable=False)
     description = models.TextField()
     price = models.DecimalField(max_digits=9999999,decimal_places=2)
-    image = models.ImageField(upload_to=upload_image_path,null=True,blank=True)
+    image = models.ImageField(upload_to=upload_image_path)
     available = models.BooleanField(default=True)
+    featured = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title[:50]
