@@ -3,6 +3,7 @@ from django.urls import reverse
 import random,os
 from .utils import unique_slug_generator
 from django.db.models.signals import pre_save
+from django.utils.encoding import smart_str
 
 def get_filename_ext(filename):
     base_name = os.path.basename(filename)
@@ -25,7 +26,7 @@ class Product(models.Model):
     featured = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.title[:50]
+        return smart_str(self.title[:50])
     
     def get_absolute_url(self):
         #return '/products/{slug}/'.format(slug=self.slug)
