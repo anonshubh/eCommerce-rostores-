@@ -27,6 +27,7 @@ urlpatterns = [
     #Local
     path('products/',include('products.urls',namespace='products')),
     path('search/',include('search.urls',namespace='search')),
+    path('cart/',include('cart.urls',namespace='cart')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
