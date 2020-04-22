@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 import random,os
-from .utils import unique_slug_generator
+from ecommerce_src.utils import unique_slug_generator
 from django.db.models.signals import pre_save
 from django.utils.encoding import smart_str
 
@@ -20,7 +20,7 @@ class Product(models.Model):
     title = models.CharField(max_length=256)
     slug = models.SlugField(unique=True,editable=False)
     description = models.TextField()
-    price = models.DecimalField(max_digits=9999999,decimal_places=2)
+    price = models.DecimalField(max_digits=100,decimal_places=2)
     image = models.ImageField(upload_to=upload_image_path)
     available = models.BooleanField(default=True)
     featured = models.BooleanField(default=False)

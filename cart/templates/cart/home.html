@@ -32,6 +32,10 @@
             <td colspan="2"></td>
             <td><b>Total</b> ₹ <span style="color: brown; ">{{cart.total}}</span><i> (Inc. GST) </i></td>
           </tr>
+          <tr>
+            <td colspan="2"></td>
+            <td><a class="btn btn-block btn-success" href="{% url 'cart:checkout' %}">Checkout</a></td>
+          </tr>
         </tbody>
       </table>
       {% else %}

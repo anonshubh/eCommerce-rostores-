@@ -28,6 +28,9 @@ urlpatterns = [
     path('products/',include('products.urls',namespace='products')),
     path('search/',include('search.urls',namespace='search')),
     path('cart/',include('cart.urls',namespace='cart')),
+    path('orders/',include('orders.urls',namespace='orders')),
+    path('accounts/',include('accounts.urls',namespace='accounts')),
+    path('checkout/',include('addresses.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

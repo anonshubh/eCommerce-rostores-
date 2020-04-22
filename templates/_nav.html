@@ -38,14 +38,14 @@
         </li> -->
         {% if user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link" href="#" tabindex="-1">Log Out</a>
+          <a class="nav-link" href="{% url 'accounts:logout_url' %}" tabindex="-1">Log Out</a>
         </li>
         {% else %}
         <li class="nav-item">
-            <a class="nav-link" href="#" tabindex="-1">Log In</a>
+            <a class="nav-link" href="{% url 'accounts:login_url' %}" tabindex="-1">Log In</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" tabindex="-1">Register</a>
+            <a class="nav-link" href="{% url 'accounts:register_url' %}" tabindex="-1">Register</a>
           </li>
         {% endif %}
         <li class="nav-item {% if request.path == cart_url %}active{% endif %}">
