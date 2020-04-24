@@ -3,14 +3,17 @@ from django.contrib.auth import authenticate,login,get_user_model
 from .forms import LoginForm,RegisterForm,GuestForm
 from django.utils.http import is_safe_url
 from .models import GuestEmail
+from django.views.generic import CreateView
+
+User = get_user_model()
 
 def login_page(request):
     form = LoginForm(request.POST or None)
     redirect_path = request.GET.get('next') or request.POST.get('next_post') or None
     if form.is_valid():
-        username = form.cleaned_data.get('username')
+        email = form.cleaned_data.get('email')
         password = form.cleaned_data.get('password')
-        user = authenticate(request,username=username,password=password)
+        user = authenticate(request,email=email,password=password)
         if user is not None:
             login(request,user)
             try:
@@ -22,16 +25,10 @@ def login_page(request):
             return redirect('home')
     return render(request,'login.html',{'form':form})
 
-User = get_user_model()
-
-def register_page(request):
-    form = RegisterForm(request.POST or None)
-    if form.is_valid():
-        username = form.cleaned_data.get('username')
-        email = form.cleaned_data.get('email')
-        password = form.cleaned_data.get('password')
-        new_user = User.objects.create_user(username,email,password)
-    return render(request,'register.html',{'form':form})
+class RegisterView(CreateView):
+    form_class = RegisterForm
+    template_name = 'register.html'
+    success_url = '/login/'
 
 def guest_register_page(request):
     form = GuestForm(request.POST or None)
