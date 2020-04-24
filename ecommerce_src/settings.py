@@ -48,9 +48,14 @@ INSTALLED_APPS = [
     'billing.apps.BillingConfig',
     'addresses.apps.AddressesConfig',
     'contact_us.apps.ContactUsConfig',
+    'analytics.apps.AnalyticsConfig',
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
+
+FORCE_SESSION_TO_ONE = False
+
+FORCE_INACTIVE_USER_ENDSESSION = True
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
