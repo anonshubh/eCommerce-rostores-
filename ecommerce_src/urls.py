@@ -22,7 +22,6 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('',TemplateView.as_view(template_name='home_page.html'),name='home'),
     path('about/',TemplateView.as_view(template_name='about_page.html'),name='about'),
-    path('reach-us/',TemplateView.as_view(template_name='contact/view.html'),name='contact'),
     path('admin/', admin.site.urls),
     #Local
     path('products/',include('products.urls',namespace='products')),
@@ -31,6 +30,7 @@ urlpatterns = [
     path('orders/',include('orders.urls',namespace='orders')),
     path('accounts/',include('accounts.urls',namespace='accounts')),
     path('checkout/',include('addresses.urls')),
+    path('reach-us/',include('contact_us.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

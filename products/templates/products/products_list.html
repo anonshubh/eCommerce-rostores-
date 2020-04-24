@@ -17,7 +17,7 @@
               <h5 class="card-title">{{product.title|title}}</h5>
               <p>Cost at ₹ <span style="color: brown; font-kerning: auto; ">{{product.price}}</span></p>
               <p class="card-text text-secondar">{{product.description|truncatechars:50}}</p>
-              <a href="{{ product.get_absolute_url }}" class="btn btn-danger">View {{product.title|title}}</a>
+              <a href="{{ product.get_absolute_url }}" class="btn btn-danger">View {{product.title|title|truncatechars:7}}</a>
             </div>
           </div>
           {% endfor %}
