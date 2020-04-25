@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'addresses.apps.AddressesConfig',
     'contact_us.apps.ContactUsConfig',
     'analytics.apps.AnalyticsConfig',
+    'marketing.apps.MarketingConfig',
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
@@ -56,6 +57,10 @@ AUTH_USER_MODEL = 'accounts.User'
 FORCE_SESSION_TO_ONE = False
 
 FORCE_INACTIVE_USER_ENDSESSION = True
+
+MAILCHIMP_API_KEY = "7f44f199fa5bba68d423add0baa7f378-us8"
+MAILCHIMP_DATA_CENTER = "us8"
+MAILCHIMP_EMAIL_LIST_ID = "470f6b201a"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

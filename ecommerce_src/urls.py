@@ -31,6 +31,7 @@ urlpatterns = [
     path('accounts/',include('accounts.urls',namespace='accounts')),
     path('checkout/',include('addresses.urls')),
     path('reach-us/',include('contact_us.urls')),
+    path('marketing/',include('marketing.urls',namespace='marketing')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
