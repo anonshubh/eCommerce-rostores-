@@ -4,7 +4,7 @@
 
 # Django related 
 ecommerce_src/settings/local.py
-#ecommerce_src/settings/base.py
+ecommerce_src/settings/base.py
 # static-cdn/  # any collected static files 
 
 # Byte-compiled / optimized / DLL files
