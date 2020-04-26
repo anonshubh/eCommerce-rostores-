@@ -6,6 +6,7 @@ from .models import GuestEmail
 from django.views.generic import CreateView,DetailView
 from .signals import user_logged_in
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 
 User = get_user_model()
 
@@ -31,7 +32,7 @@ def login_page(request):
 class RegisterView(CreateView):
     form_class = RegisterForm
     template_name = 'accounts/register.html'
-    success_url = '/login/'
+    success_url = reverse_lazy('accounts:login_url')
 
 def guest_register_page(request):
     form = GuestForm(request.POST or None)
