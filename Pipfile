@@ -9,6 +9,9 @@ verify_ssl = true
 django = "==2.2.12"
 pillow = "*"
 requests = "*"
+psycopg2 = "*"
+dj-database-url = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.7"
