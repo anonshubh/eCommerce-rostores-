@@ -63,6 +63,7 @@ MAILCHIMP_DATA_CENTER = "us8"
 MAILCHIMP_EMAIL_LIST_ID = "470f6b201a"
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -71,6 +72,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 LOGOUT_REDIRECT_URL = '/'
 
@@ -161,3 +164,8 @@ CSRF_COOKIE_SECURE              = False
 SECURE_HSTS_SECONDS             = None
 SECURE_HSTS_INCLUDE_SUBDOMAINS  = False
 SECURE_FRAME_DENY               = False
+
+AWS_GROUP_NAME = 'rostores_group'
+AWS_USERNAME = 'rostores'
+AWS_ACCESS_KEY_ID = 'AKIAQ3XIZG7TUACKZA5C'
+AWS_SECRET_KEY = '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'
