@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 from .models import MarketingPreference
 from .forms import MarketingPreferenceForm
@@ -47,7 +48,7 @@ class MailchimpWebhookView(View):
 
             return HttpResponse("Thank You",status=200)
     
-    @csrf_exempt
+    @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super(MailchimpWebhookView,self).dispatch(request, *args, **kwargs)
 

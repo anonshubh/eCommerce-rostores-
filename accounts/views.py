@@ -3,8 +3,9 @@ from django.contrib.auth import authenticate,login,get_user_model
 from .forms import LoginForm,RegisterForm,GuestForm
 from django.utils.http import is_safe_url
 from .models import GuestEmail
-from django.views.generic import CreateView
+from django.views.generic import CreateView,DetailView
 from .signals import user_logged_in
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 User = get_user_model()
 
@@ -25,11 +26,11 @@ def login_page(request):
             if is_safe_url(redirect_path,request.get_host()):
                 return redirect(redirect_path)
             return redirect('home')
-    return render(request,'login.html',{'form':form})
+    return render(request,'accounts/login.html',{'form':form})
 
 class RegisterView(CreateView):
     form_class = RegisterForm
-    template_name = 'register.html'
+    template_name = 'accounts/register.html'
     success_url = '/login/'
 
 def guest_register_page(request):
@@ -43,5 +44,11 @@ def guest_register_page(request):
             return redirect(redirect_path)
         return redirect('accounts:register_url')
     return redirect('accounts:register_url')
+
+class AccountHomeView(LoginRequiredMixin,DetailView):
+    template_name = 'accounts/home.html'
+
+    def get_object(self):
+        return self.request.user
 
 

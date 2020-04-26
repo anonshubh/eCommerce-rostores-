@@ -44,6 +44,7 @@ class User(AbstractBaseUser):
     email = models.EmailField(unique=True,max_length=256)
     full_name = models.CharField(max_length = 256,default='')
     active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=True)
     staff = models.BooleanField(default=False)
     admin = models.BooleanField(default=False)
     timestamp = models.DateTimeField(auto_now_add=True)
@@ -76,9 +77,9 @@ class User(AbstractBaseUser):
     def is_admin(self):
         return self.admin
     
-    @property
-    def is_active(self):
-        return self.active
+    # @property
+    # def is_active(self):
+    #     return self.active
 
 
 class GuestEmail(models.Model):

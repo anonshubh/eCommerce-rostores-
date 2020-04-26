@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}Settings{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-12 text-center">
+            <h2>Account</h2>
+            <hr>
+        </div>
+
+        <div class="col-12 col-md-3 my-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Support</h5>
+                    <div class="list-group">
+                        <a class="list-group-item" href="{% url 'about' %}">About</a>
+                        <a class="list-group-item" href="{% url 'contact_us' %}">Contact</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-3 my-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Billing</h5>
+                    <div class="list-group">
+                        <a class="list-group-item" href="#">Addresses</a>
+                        <a class="list-group-item" href="#">Payment Methods</a>
+                        <a class="list-group-item" href="#">Orders</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-3 my-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Personal Information</h5>
+                    <div class="list-group">
+                        <a class="list-group-item" href="#">Name</a>
+                        <a class="list-group-item" href="#">Email</a>
+                        <a class="list-group-item" href="#">Password Reset</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-12 col-md-3 my-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Preferences</h5>
+                    <div class="list-group">
+                        <a class="list-group-item" href="{% url 'marketing:opt_email' %}">Email Newsletter Preference</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-3 my-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">History</h5>
+                    <div class="list-group">
+                        <a class="list-group-item" href="#">Products</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+{% endblock %}

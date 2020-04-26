@@ -23,7 +23,8 @@ urlpatterns = [
     path('',TemplateView.as_view(template_name='home_page.html'),name='home'),
     path('about/',TemplateView.as_view(template_name='about_page.html'),name='about'),
     path('admin/', admin.site.urls),
-    #Local
+    path('accounts/',include('accounts.passwords.urls')),
+    #Local 
     path('products/',include('products.urls',namespace='products')),
     path('search/',include('search.urls',namespace='search')),
     path('cart/',include('cart.urls',namespace='cart')),
