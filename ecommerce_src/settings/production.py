@@ -20,7 +20,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'ek*z4pi2em15j54b=qb&s*exhasv=+#q+=+iw0orj$zm116_+8'
+SECRET_KEY = os.environ.get('SECRET_KEY')
+
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -57,9 +59,9 @@ FORCE_SESSION_TO_ONE = False
 
 FORCE_INACTIVE_USER_ENDSESSION = True
 
-MAILCHIMP_API_KEY = "7f44f199fa5bba68d423add0baa7f378-us8"
+MAILCHIMP_API_KEY = os.environ.get('MAILCHIMP_API_KEY')
 MAILCHIMP_DATA_CENTER = "us8"
-MAILCHIMP_EMAIL_LIST_ID = "470f6b201a"
+MAILCHIMP_EMAIL_LIST_ID = os.environ.get('MAILCHIMP_EMAIL_LIST_ID')
 
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
