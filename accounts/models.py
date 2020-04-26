@@ -52,7 +52,7 @@ class User(AbstractBaseUser):
     objects = UserManager()
     
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = [full_name]
+    REQUIRED_FIELDS = []
 
     def __str__(self):
         return smart_str(self.email)
