@@ -11,6 +11,7 @@ from django.contrib import messages
 from django.views.generic.edit import FormMixin
 from django.db.models import Q
 from .mixins import NextUrlMixin,RequestFormAttachMixin
+from django.contrib.messages.views import SuccessMessageMixin
 
 User = get_user_model()
 
@@ -26,10 +27,11 @@ class LoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
         return redirect(next_path)
 
 
-class RegisterView(CreateView):
+class RegisterView(SuccessMessageMixin,CreateView):
     form_class = RegisterForm
     template_name = 'accounts/register.html'
     success_url = reverse_lazy('accounts:login_url')
+    success_message = "Verification mail has been sent to your Email."
 
 def guest_register_page(request):
     form = GuestForm(request.POST or None)

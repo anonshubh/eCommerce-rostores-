@@ -34,9 +34,16 @@ BASE_URL = 'https://rostores.herokuapp.com'
 
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_HOST_USER = 'apikey'
-EMAIL_HOST_PASSWORD = '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'
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+MANAGERS = (
+    ('rolinstores@gmail.com','Shubh Pathak')
+)
+ADMINS = MANAGERS
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # Application definition
 
@@ -72,7 +79,6 @@ MAILCHIMP_API_KEY = os.environ.get('MAILCHIMP_API_KEY')
 MAILCHIMP_DATA_CENTER = "us8"
 MAILCHIMP_EMAIL_LIST_ID = os.environ.get('MAILCHIMP_EMAIL_LIST_ID')
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',

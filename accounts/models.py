@@ -145,10 +145,10 @@ class EmailActivation(models.Model):
         return False
     
     def send_activation_email(self):
-        if not self.activated and self.forced_expired:
+        if not self.activated and not self.forced_expired:
             if self.key:
                 base_url = getattr(settings,'BASE_URL')
-                key_path = reversed('accounts:email-activate',kwargs={'key':self.key})
+                key_path = reverse('accounts:email-activate',kwargs={'key':self.key})
                 path = f"{base_url}{key_path}"
                 context={
                     'path':path,
@@ -159,7 +159,7 @@ class EmailActivation(models.Model):
                 subject = "Email Verification"
                 from_email = settings.DEFAULT_FROM_MAIL
                 recipient_list = [self.email]
-                send_email = send_email(
+                send_email = send_mail(
                     subject,
                     txt_,
                     from_email,
@@ -167,6 +167,7 @@ class EmailActivation(models.Model):
                     html_message = html_,
                     fail_silently = False,
                 )
+                print("Email send")
                 return send_email
         return False
     

@@ -12,3 +12,6 @@ def contact_view(request):
         if request.is_ajax():
             return HttpResponse(errors,status=400,content_type='application/json')
     return render(request,'contact_us/view.html', {'form':form})
+
+
+    
