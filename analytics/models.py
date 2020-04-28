@@ -15,6 +15,15 @@ FORCE_SESSION_TO_ONE = getattr(settings,'FORCE_SESSION_TO_ONE',False)
 
 FORCE_INACTIVE_USER_ENDSESSION = getattr(settings,'FORCE_INACTIVE_USER_ENDSESSION',False)
 
+class ObjectViewedQuerySet(models.query.QuerySet):
+    def by_model(self,model_class):
+        content_type = ContentType.objects.get_for_model(model_class)
+        return self.filter(content_type=content_type)
+
+class ObjectViewedManager(models.Manager):
+    def get_queryset(self):
+        return ObjectViewedQuerySet(self.model,using=self._db)
+    
 class ObjectViewed(models.Model):
     user = models.ForeignKey(User,blank=True,null=True,on_delete=models.CASCADE)
     ip_address = models.CharField(max_length = 128,null=True,blank=True)
@@ -22,6 +31,8 @@ class ObjectViewed(models.Model):
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type','object_id')
     timestamp = models.DateTimeField(auto_now_add=True)
+
+    objects = ObjectViewedManager()
 
     def __str__(self):
         return "%s was viewed on %s" %(self.content_object,self.timestamp)
@@ -99,4 +110,5 @@ def user_logged_in_receiver(sender,instance,request,*args,**kwagrs):
     )
 
 user_logged_in.connect(user_logged_in_receiver)
+
 

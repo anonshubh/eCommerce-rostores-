@@ -1,11 +1,14 @@
 from django.shortcuts import render,redirect
 from django.utils.http import is_safe_url
-from .forms import AddressForm
+from .forms import AddressForm,AddressCheckoutForm
 from billing.models import BillingProfile
 from .models import Address
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView, UpdateView, CreateView
+from django.urls import reverse_lazy
 
 def checkout_address_create_view(request):
-    form = AddressForm(request.POST or None)
+    form = AddressCheckoutForm(request.POST or None)
     context={
         'form':form
     }
@@ -40,3 +43,38 @@ def checkout_address_reuse_view(request):
                 if is_safe_url(redirect_path,request.get_host()):
                     return redirect(redirect_path)
     return redirect('cart:checkout')
+
+class AddressListView(LoginRequiredMixin,ListView):
+    template_name = 'addresses/list.html'
+
+    def get_queryset(self):
+        request = self.request
+        billing_profile, billing_profile_created = BillingProfile.objects.get_or_new(request)
+        return Address.objects.filter(billing_profile=billing_profile)
+
+
+
+class AddressUpdateView(LoginRequiredMixin, UpdateView):
+    form_class = AddressForm
+    success_url = reverse_lazy('addresses')
+    template_name = 'addresses/update.html'
+
+    def get_queryset(self):
+        request = self.request
+        billing_profile, billing_profile_created = BillingProfile.objects.get_or_new(request)
+        return Address.objects.filter(billing_profile=billing_profile)
+
+
+class AddressCreateView(LoginRequiredMixin, CreateView):
+    template_name = 'addresses/update.html'
+    form_class = AddressForm
+    success_url = '/addresses'
+
+    def form_valid(self, form):
+        request = self.request
+        billing_profile, billing_profile_created = BillingProfile.objects.new_or_get(request)
+        instance = form.save(commit=False)
+        instance.billing_profile = billing_profile
+        instance.save()
+        return super(AddressCreateView, self).form_valid(form)
+

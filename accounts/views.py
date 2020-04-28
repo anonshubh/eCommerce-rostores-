@@ -1,10 +1,10 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate,login,get_user_model
-from .forms import LoginForm,RegisterForm,GuestForm,ReactivateEmailForm
+from .forms import LoginForm,RegisterForm,GuestForm,ReactivateEmailForm,UserDetailChangeForm
 from django.utils.http import is_safe_url
 from django.utils.safestring import mark_safe
 from .models import GuestEmail,EmailActivation
-from django.views.generic import CreateView,DetailView,View,FormView
+from django.views.generic import CreateView,DetailView,View,FormView,UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy,reverse
 from django.contrib import messages
@@ -33,18 +33,16 @@ class RegisterView(SuccessMessageMixin,CreateView):
     success_url = reverse_lazy('accounts:login_url')
     success_message = "Verification mail has been sent to your Email."
 
-def guest_register_page(request):
-    form = GuestForm(request.POST or None)
-    redirect_path = request.GET.get('next') or request.POST.get('next_post') or None
-    if form.is_valid():
-        email = form.cleaned_data.get('email')
-        new_guest_email = GuestEmail.objects.create(email=email)
-        request.session['guest_email_id'] = new_guest_email.id
-        if is_safe_url(redirect_path,request.get_host()):
-            return redirect(redirect_path)
-        return redirect('accounts:register_url')
-    return redirect('accounts:register_url')
+class GuestRegisterView(NextUrlMixin,RequestFormAttachMixin,CreateView):
+    form_class = GuestForm
+    default_next = '/accounts/register/'
 
+    def get_success_url(self):
+        return self.get_next_url()
+
+    def form_invalid(self,form):
+        return redirect(self.default_next)
+        
 class AccountHomeView(LoginRequiredMixin,DetailView):
     template_name = 'accounts/home.html'
 
@@ -95,3 +93,13 @@ class AccountEmailActivateView(FormMixin,View):
 
     def form_invalid(self, form):
         return render(self.request,'registration/activation-error.html',{'form':form,"key":self.key})
+
+
+class UserDetailUpdateView(LoginRequiredMixin,UpdateView):
+    form_class = UserDetailChangeForm
+    template_name = 'accounts/update_form.html'
+    success_url = reverse_lazy("accounts:home")
+
+    def get_object(self):
+        return self.request.user
+    

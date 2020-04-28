@@ -5,7 +5,7 @@ from orders.models import Order
 from accounts.forms import LoginForm,GuestForm
 from billing.models import BillingProfile
 from accounts.models import GuestEmail
-from addresses.forms import AddressForm
+from addresses.forms import AddressCheckoutForm
 from addresses.models import Address
 from django.http import JsonResponse
 
@@ -42,9 +42,9 @@ def checkout_home(request):
     order_obj=None
     if new_obj or cart_obj.products.count() == 0:
         return redirect('cart:home')
-    form = LoginForm()
-    guest_form = GuestForm()
-    address_form = AddressForm()
+    form = LoginForm(request=request)
+    guest_form = GuestForm(request=request)
+    address_form = AddressCheckoutForm()
     billing_address_id = request.session.get('billing_address_id',None)
     shipping_address_id = request.session.get('shipping_address_id',None)
     billing_profile,billing_profile_created = BillingProfile.objects.get_or_new(request)
@@ -69,6 +69,7 @@ def checkout_home(request):
             order_obj.mark_paid()
             del request.session['cart_id']
             del request.session['cart_items']
+            request.session['order_ref']= order_obj.order_id
             return redirect('cart:success')
     context={
         'order':order_obj,
@@ -82,5 +83,8 @@ def checkout_home(request):
 
 
 def checkout_done_view(request):
-    return render(request,'cart/checkout_done.html',{})
+    ref = None
+    if request.session['order_ref']:
+        ref = request.session['order_ref']
+    return render(request,'cart/checkout_done.html',{'ref':ref})
 

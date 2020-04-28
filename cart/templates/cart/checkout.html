@@ -38,7 +38,7 @@
   {% if not order.shipping_address %}
   <div class="row container ">
     <div class="col-12" >
-      <p class="lead">Shipping Address</p>
+      <h3 class="mt-2 ml-1">Shipping Address</h3>
         <hr>
     </div>
       <div class="col-6 " >
@@ -53,7 +53,7 @@
   {% elif not order.billing_address %}
   <div class="row container ">
     <div class="col-12" >
-      <p class="lead">Billing Address</p>
+      <h3 class="mt-2 ml-1">Billing Address</h3>
       <hr>
     </div>
       <div class="col-6">
@@ -67,14 +67,16 @@
     </div>
    
   {% else %}
-    <h2>Review Checkout</h2>
+    <h2 class="ml-2" >Review Checkout</h2>
     <div class="container" >
+      <div class="lead" >
         <p>Cart Items: {%for product in order.cart.products.all%}{{ product }}{% if not forloop.last %},<br>{% endif %}{% endfor %}</p>
-        <p>Shipping Address: {{order.shipping_address.get_address}}</p>
-        <p>Billing Address: {{order.billing_address.get_address}}</p>
+        <p>Shipping Address: {{order.shipping_address_final}}</p>
+        <p>Billing Address: {{order.billing_address_final}}</p>
         <p>Cart Total: {{ order.cart.total }}</p>
         <p>Shipping Total: {{ order.shipping_total }}</p>
-        <p>Order Total: {{ order.total }}</p>
+        <p><b>Order Total: {{ order.total }}</b></p>
+      </div>
         <form method="POST" action="" class="form">
           {% csrf_token %}
         <button type="submit" class="btn btn-primary" >Checkout</button>

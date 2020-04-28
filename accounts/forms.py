@@ -3,15 +3,29 @@ from django.contrib.auth import authenticate, get_user_model, login
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.urls import reverse
 from .signals import user_logged_in
-from .models import EmailActivation
+from .models import EmailActivation,GuestEmail
 from django.db.models import Q
 from django.utils.safestring import mark_safe
 from django.contrib import messages
 
 User = get_user_model()
 
-class GuestForm(forms.Form):
-    email = forms.EmailField()
+class GuestForm(forms.ModelForm):
+    class Meta():
+        model = GuestEmail
+        fields=['email']
+    
+    def __init__(self, request, *args, **kwargs):
+        self.request = request
+        super(GuestForm, self).__init__(*args, **kwargs)
+
+    def save(self, commit=True):
+        obj = super(GuestForm, self).save(commit=False)
+        if commit:
+            obj.save()
+            request = self.request
+            request.session['guest_email_id'] = obj.id
+        return obj
 
 class LoginForm(forms.Form):
     email    = forms.EmailField(label='Email')
@@ -143,3 +157,9 @@ class ReactivateEmailForm(forms.Form):
             msg = """This Email does'nt exists, would you like to <a href="{link}">register</a>?""".format(link=register_link)
             raise forms.ValidationError(mark_safe(msg))
         return email
+
+class UserDetailChangeForm(forms.ModelForm):
+    full_name = forms.CharField(label = 'Name',required=False)
+    class Meta:
+        model = User
+        fields = ['full_name',]

@@ -6,6 +6,7 @@ from django.utils.encoding import smart_str
 from ecommerce_src.utils import unique_order_id_generator
 from billing.models import BillingProfile
 from addresses.models import Address
+from django.urls import reverse
 
 ORDER_STATUS_CHOICES=[
     ('created','Created'),
@@ -14,7 +15,22 @@ ORDER_STATUS_CHOICES=[
     ('refunded','Refunded'),
 ]
 
+class OrderManagerQuerySet(models.query.QuerySet):
+    def by_request(self,request):
+        my_profile,created = BillingProfile.objects.get_or_new(request)
+        return self.filter(billing_profile=my_profile)
+    
+    def not_created(self):
+        return self.exclude(status = 'created')
+
 class OrderManager(models.Manager):
+    
+    def get_queryset(self):
+        return OrderManagerQuerySet(self.model,using=self._db)
+    
+    def by_request(self,request):
+        return self.get_queryset().by_request(request)
+
     def get_or_new(self,billing_profile,cart_obj):
         created = False
         qs = self.get_queryset().filter(billing_profile=billing_profile,cart=cart_obj,active=True,status='created')
@@ -32,20 +48,38 @@ class Order(models.Model):
     cart            = models.ForeignKey(Cart,on_delete=models.CASCADE)
     shipping_address = models.ForeignKey(Address,related_name='shipping_address',null=True,blank=True,on_delete=models.CASCADE)
     billing_address  = models.ForeignKey(Address,related_name='billing_address',null=True,blank=True,on_delete=models.CASCADE)
+    shipping_address_final  = models.TextField(blank=True, null=True)
+    billing_address_final   = models.TextField(blank=True, null=True)
     status          = models.CharField(max_length=100,default='created',choices=ORDER_STATUS_CHOICES)
     shipping_total  = models.DecimalField(default=50,max_digits=100,decimal_places=2)
     total           = models.DecimalField(default=0.00,max_digits=100,decimal_places=2)
     active          = models.BooleanField(default=True)
+    timestamp       = models.DateTimeField(auto_now_add=True)
+    updated         = models.DateTimeField(auto_now=True)
 
     objects = OrderManager()
 
+    class Meta():
+        ordering = ['-timestamp','-updated']
+
     def __str__(self):
         return smart_str(self.order_id)
+
+    def get_absolute_url(self):
+        return reverse("orders:detail",kwargs={'order_id':self.order_id})
     
     def update_total(self):
         self.total = format(math.fsum([self.cart.total + self.shipping_total]),'.2f')
         self.save()
         return self.total
+    
+    def get_shipping_status(self):
+        if self.status == 'refunded':
+            return "Refunded Order"
+        if self.status == 'shipped':
+            return "Shipped"
+        else:
+            return "Shipping Soon"
     
     def check_done(self):
         billing_profile = self.billing_profile
@@ -68,6 +102,12 @@ def pre_save_create_order_id(sender,instance,*args,**kwargs):
     qs = Order.objects.filter(cart=instance.cart).exclude(billing_profile=instance.billing_profile)
     if qs.exists():
         qs.update(active=False)
+    
+    if instance.shipping_address and not instance.shipping_address_final:
+        instance.shipping_address_final = instance.shipping_address.get_address()
+
+    if instance.billing_address and not instance.billing_address_final:
+        instance.billing_address_final = instance.billing_address.get_address()
 
 pre_save.connect(pre_save_create_order_id,sender=Order)
 

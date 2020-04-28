@@ -1,9 +1,14 @@
 {% extends 'base.html' %}
 
+{% block title %}Thank You{% endblock %}
+
 {% block content %}
 
 <div class="col-6 mx-auto py-5 text-center " >
-    <h1 class="display-1">Thank you for your order!!</h1>
+    <h2 class="display-2">Thank you for your order!!</h2>
+    {% if ref %}
+    <p class="lead mt-3 ">Your Order Reference Id: <b>{{ref}}</b></p>
+    {% endif %}
 
 </div>
 

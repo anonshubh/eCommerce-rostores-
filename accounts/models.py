@@ -11,6 +11,7 @@ from django.conf import settings
 from django.db.models.signals import post_save,pre_save
 from ecommerce_src.utils import random_string_generator,unique_key_generator
 
+
 class UserManager(BaseUserManager):
     def create_user(self,email,password=None,is_active=True,is_staff=False,is_admin=False):
         if not email:

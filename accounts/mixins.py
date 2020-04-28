@@ -2,7 +2,7 @@ from django.utils.http import is_safe_url
 
 
 class NextUrlMixin(object):
-    default_next = "home"
+    default_next = "/"
     def get_next_url(self):
         request = self.request
         redirect_path = request.GET.get('next') or request.POST.get('next_post') or None
