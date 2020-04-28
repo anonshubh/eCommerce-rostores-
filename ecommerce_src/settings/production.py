@@ -29,6 +29,15 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['.herokuapp.com',]
 
+DEFAULT_FROM_MAIL = 'Rolin Stores <rolinstores@gmail.com>'
+BASE_URL = 'https://rostores.herokuapp.com'
+
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = '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'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -57,11 +66,13 @@ AUTH_USER_MODEL = 'accounts.User'
 
 FORCE_SESSION_TO_ONE = False
 
-FORCE_INACTIVE_USER_ENDSESSION = True
+FORCE_INACTIVE_USER_ENDSESSION = False
 
 MAILCHIMP_API_KEY = os.environ.get('MAILCHIMP_API_KEY')
 MAILCHIMP_DATA_CENTER = "us8"
 MAILCHIMP_EMAIL_LIST_ID = os.environ.get('MAILCHIMP_EMAIL_LIST_ID')
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -162,6 +173,15 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,"media")
 
+from django.contrib.messages import constants as messages
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-info',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+}
 
 
 CORS_REPLACE_HTTPS_REFERER      = True

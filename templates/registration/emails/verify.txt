@@ -1,0 +1,12 @@
+Hi sir/madam,
+
+Please activate your account for {{email}} by clicking the link below:
+
+{{path}}
+
+Once you activate, you can login!
+
+Thank you,
+Rollin Stores
+
+

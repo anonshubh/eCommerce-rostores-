@@ -78,7 +78,7 @@ def post_save_session_receiver(sender,instance,created,*args,**kwargs):
 def post_save_user_changed_receiver(sender,instance,created,*args,**kwargs):
     if not created:
         if instance.is_active == False:
-            qs = UserSession.objects.filter(user=instance.user,ended=False)
+            qs = UserSession.objects.filter(user=instance.user,ended=False,active=False)
             for i in qs:
                 i.end_session()
 

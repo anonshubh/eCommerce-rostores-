@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Rolin Stores{% endblock %}
+
+{% block content %}
+
+<div class="container" >
+    <div class="row" >
+        {% if key %}
+        <div class="col-12 text-center py-5" >
+            <h2 class="my-5 py-5" >Activation Error, Please Try Again.</h2>
+        </div>
+        {% else %}
+        <div class="col-12 text-center py-5" >
+            <h2 class="my-5 py-5" >Please re-activate your account.</h2>
+        </div>
+        {% endif %}
+        <div class="col-12 text-center">
+            <form action="" method="post">
+                {% csrf_token %}
+                {{form.as_p}}
+                <input class="btn btn-primary" type="submit" name="" value="Resend Activation Link">
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
