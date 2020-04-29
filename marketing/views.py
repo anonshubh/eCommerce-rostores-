@@ -23,7 +23,7 @@ class MarketingPreferenceUpdateView(LoginRequiredMixin,SuccessMessageMixin,Updat
 
     def get_object(self):
         user = self.request.user
-        obj,created = MarketingPreference.objects.get_or_create(user)
+        obj,created = MarketingPreference.objects.get_or_create(user=user)
         return obj
 
 class MailchimpWebhookView(View):

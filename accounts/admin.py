@@ -9,7 +9,16 @@ from .forms import UserAdminChangeForm,UserAdminCreationForm
 User = get_user_model()
 
 class UserAdmin(BaseUserAdmin):
-    # The forms to add and change user instances
+
+    def has_add_permission(self, request, obj=None):
+        return request.user.is_superuser
+
+    def has_delete_permission(self, request, obj=None):
+        return request.user.is_superuser
+        
+    def has_view_or_change_permission(self, request, obj=None):
+        return request.user.is_superuser
+
     form = UserAdminChangeForm
     add_form = UserAdminCreationForm
 

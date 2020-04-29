@@ -83,6 +83,12 @@ class User(AbstractBaseUser):
     @property
     def is_admin(self):
         return self.admin
+
+    @property
+    def is_superuser(self):
+        if self.admin and self.staff:
+            return True
+        return False
     
 class GuestEmail(models.Model):
     email = models.EmailField()

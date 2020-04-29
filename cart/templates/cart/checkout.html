@@ -1,10 +1,7 @@
 {% extends 'base.html' %}
-
+{% load crispy_forms_tags %}
 {% block title %}Checkout{% endblock %}
 {% block content %}
-
-<!-- <p class="lead" >{{order.order_id}} -- {{order.cart}}</p> -->
-
 
 {% if not billing_profile %}
 <div class="container" >
@@ -16,26 +13,26 @@
             <input name='next' value="{{ next_url }}" type="hidden">
             {% endif %}
             {% csrf_token %}
-            {{form.as_p}}
+            {{form|crispy}}
             <input class="btn btn-success" type="submit" value="Log In">
         </form>
-    </div class="col-12 col-md-6" >
-    <div>
+    </div>
+    <div class="col-12 col-md-6 mt-3 " >
         <p class="lead" >Continue as Guest</p>
-        <form action='{% url 'accounts:guest_register' %}' method="post">
+        <form class="" action='{% url 'accounts:guest_register' %}' method="post">
             {% if next %}
             <input name='next' value="{{ next_url }}" type="hidden">
             {% endif %}
             {% csrf_token %}
-            {{guest_form.as_p}}
-            <input class="btn btn-primary" type="submit" value="Log In">
+            {{guest_form|crispy}}
+            <input class="btn btn-primary" type="submit" value="Continue">
         </form>
     </div>
  </div>
 </div>
 
 {% else %}
-  {% if not order.shipping_address %}
+  {% if not order.shipping_address and shipping_address_required %}
   <div class="row container ">
     <div class="col-12" >
       <h3 class="mt-2 ml-1">Shipping Address</h3>

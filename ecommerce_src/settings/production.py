@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
 
     #local
     'accounts.apps.AccountsConfig',
@@ -68,6 +69,8 @@ INSTALLED_APPS = [
     'analytics.apps.AnalyticsConfig',
     'marketing.apps.MarketingConfig',
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 AUTH_USER_MODEL = 'accounts.User'
 
@@ -178,6 +181,8 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,"media")
+
+PROTECTED_ROOT = os.path.join(BASE_DIR,"media(protected)")
 
 from django.contrib.messages import constants as messages
 

@@ -2,6 +2,11 @@
 
 .vscode/
 
+*.sqlite3
+
+media/
+media(protected)/
+
 # Django related 
 ecommerce_src/settings/local.py
 ecommerce_src/settings/base.py

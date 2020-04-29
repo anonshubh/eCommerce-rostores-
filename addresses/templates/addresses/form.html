@@ -1,3 +1,4 @@
+{% load crispy_forms_tags %}
 <form action='{{action_url}}' method="post">
     {% csrf_token %}
     {% if next %}
@@ -6,6 +7,6 @@
     {% if address_type %}
     <input name='address_type' value="{{ address_type }}" type="hidden">
     {% endif %}
-    {{form.as_p}}
+    {{form|crispy}}
     <input class="btn btn-primary" type="submit" value="Save">
 </form>
