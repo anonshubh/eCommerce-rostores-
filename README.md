@@ -1,7 +1,7 @@
 # An ecommerce website.
 
 Stack:- <br/>
-Front-End: HTML,CSS,JS,jquery,Bootstrap <br/>
+Front-End: HTML, CSS, JS, jquery, Bootstrap <br/>
 Back-End: Python(Django) <br/>
 db: sqlite in Local, postgres in Production<br/>
 <br/>
