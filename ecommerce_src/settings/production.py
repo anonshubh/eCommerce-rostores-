@@ -29,7 +29,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['.herokuapp.com',]
 
-DEFAULT_FROM_MAIL = 'Rolin Stores <rolinstores@gmail.com>'
+DEFAULT_FROM_EMAIL = 'Rolin Stores <rolinstores@gmail.com>'
 BASE_URL = 'https://rostores.herokuapp.com'
 
 EMAIL_HOST = 'smtp.sendgrid.net'

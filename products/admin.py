@@ -3,13 +3,13 @@ from django.contrib import admin
 # Register your models here.
 from .models import Product,ProductFile
 
-class ProductFileInline(admin.TabularInline):
-    model = ProductFile
-    extra = 1
+# class ProductFileInline(admin.TabularInline):
+#     model = ProductFile
+#     extra = 1
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['__str__','is_digital']
-    inlines = [ProductFileInline]
+    # inlines = [ProductFileInline]
     class Meta():
         model = Product
 
