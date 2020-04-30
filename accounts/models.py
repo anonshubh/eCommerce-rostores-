@@ -164,7 +164,7 @@ class EmailActivation(models.Model):
                 txt_ = get_template('registration/emails/verify.txt').render(context)
                 html_ = get_template('registration/emails/verify.html').render(context)
                 subject = "Email Verification"
-                from_email = settings.DEFAULT_FROM_MAIL
+                from_email = settings.DEFAULT_FROM_EMAIL
                 recipient_list = [self.email]
                 send_email = send_mail(
                     subject,
@@ -174,7 +174,6 @@ class EmailActivation(models.Model):
                     html_message = html_,
                     fail_silently = False,
                 )
-                print("Email send")
                 return send_email
         return False
     
