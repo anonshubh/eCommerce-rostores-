@@ -1,8 +1,8 @@
-An ecommerce website.
+# An ecommerce website.
 
-Stack:-
-Front-End: HTML,CSS,JS,JQUERY,BOOTSTRAP
-Back-End: Python(Django)
-db: sqlite in local, postgres in production
-
+Stack:- <br/>
+Front-End: HTML, CSS, JS, jquery, Bootstrap <br/>
+Back-End: Python(Django) <br/>
+db: sqlite in Local, postgres in Production<br/>
+<br/>
 Live at: https://rostores.herokuapp.com/
