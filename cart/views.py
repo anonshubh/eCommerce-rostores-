@@ -8,6 +8,9 @@ from accounts.models import GuestEmail
 from addresses.forms import AddressCheckoutForm
 from addresses.models import Address
 from django.http import JsonResponse
+from django.core.mail import send_mail
+from django.conf import settings
+from django.template.loader import get_template
 
 def cart_home(request):
     cart_obj,new_obj= Cart.objects.get_or_new(request)
@@ -73,6 +76,12 @@ def checkout_home(request):
             del request.session['cart_id']
             del request.session['cart_items']
             request.session['order_ref']= order_obj.order_id
+            user_email = order_obj.billing_profile.user.email
+            cxt = {'order_id':order_obj.order_id}
+            txt_ = get_template('cart/email/order.txt').render(cxt)
+            html_ = get_template('cart/email/order.html').render(cxt)
+            subject = "Purchase Successful"     
+            send_mail(subject,txt_,settings.DEFAULT_FROM_EMAIL,[user_email],html_message=html_,fail_silently=False)
             return redirect('cart:success')
     context={
         'order':order_obj,
@@ -90,5 +99,6 @@ def checkout_done_view(request):
     ref = None
     if request.session['order_ref']:
         ref = request.session['order_ref']
+
     return render(request,'cart/checkout_done.html',{'ref':ref})
 

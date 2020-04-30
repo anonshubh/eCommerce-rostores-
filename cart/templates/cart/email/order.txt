@@ -1,0 +1,5 @@
+Thank You for your purchase,
+your order has been confirmed.
+
+Order Reference number is {{order_id}}
+
