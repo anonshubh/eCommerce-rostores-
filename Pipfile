@@ -15,6 +15,7 @@ gunicorn = "*"
 whitenoise = "*"
 django-heroku = "*"
 django-crispy-forms = "*"
+gunicon = "*"
 
 [requires]
 python_version = "3.7"
