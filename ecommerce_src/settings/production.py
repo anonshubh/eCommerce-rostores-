@@ -38,10 +38,7 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-MANAGERS = (
-    ('rolinstores@gmail.com','Shubh Pathak')
-)
-ADMINS = MANAGERS
+ADMINS = [('Shubh Pathak','rolinstores@gmail.com')]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
