@@ -20,6 +20,9 @@
 <p>Shipping Total: {{ order.shipping_total }}</p>
 <p>Order Total: {{ order.total }}</p>
 <p><b>Order Status: {{ order.get_shipping_status }}</b></p>
+{% if object.get_shipping_status == 'Shipping Soon'%}
+<td><a class="btn btn-danger" href="{% url 'orders:cancel' order_id=object.order_id %}">Cancel</a></td>
+{% endif %}
 </div>
 </div>
 </div>

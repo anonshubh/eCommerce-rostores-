@@ -17,6 +17,7 @@ ORDER_STATUS_CHOICES=[
     ('paid','Paid'),
     ('shipped','Shipped'),
     ('refunded','Refunded'),
+    ('cancelled,','Cancelled'),
 ]
 
 class OrderManagerQuerySet(models.query.QuerySet):
@@ -82,9 +83,15 @@ class Order(models.Model):
             return "Refunded Order"
         if self.status == 'shipped':
             return "Shipped"
+        if self.status == 'cancelled':
+            return "Cancelled"
         else:
             return "Shipping Soon"
-    
+
+    def cancellation(self):
+        self.status = 'cancelled'
+        self.save()
+
     def check_done(self):
         shipping_address_required = not self.cart.is_digital
         shipping_done = False

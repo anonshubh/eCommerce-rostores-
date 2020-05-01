@@ -19,6 +19,11 @@
                         <td><a href="{{object.get_absolute_url}}">{{object.order_id}}</a></td>
                         <td>{{object.get_shipping_status}}</td>
                         <td>{{object.total}}</td>
+                        {% if object.get_shipping_status == 'Shipping Soon'%}
+                        <td><a class="btn btn-danger" href="{% url 'orders:cancel' order_id=object.order_id %}">Cancel</a></td>
+                        {% else %}
+                        <td><p class="lead" >Success</p></td>
+                        {% endif %}
                     </tr>
                     {% empty %}
                     <tr><td colspan="3" ><p class="lead" >No orders yet.</p></td></tr>

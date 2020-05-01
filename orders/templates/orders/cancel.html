@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Cancel Order{% endblock %}
+
+{% block content %}
+<div class="container" >
+    <div class="row" >
+        <div class="col-12" >
+            <h2 class="text-center" >Cancellation of Order: {{object}}</h2>
+        </div>
+        <div class="lead col-12 text-center" >
+            <p>Are you sure you want to cancel?</p>
+        </div>
+        <div class="col-12 text-center" >
+            <form method="post">
+                {% csrf_token %}
+                <button class="btn btn-danger" type="submit">Proceed</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

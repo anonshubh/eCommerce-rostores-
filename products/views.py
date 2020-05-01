@@ -68,12 +68,12 @@ class ProductDownloadView(View):
             messages.error(request, "You do not have access to download this item")
             return redirect(download_obj.get_default_url())
         file_root = settings.PROTECTED_ROOT
-        filepath = download_obj.file.path # .url /media/
-        final_filepath = os.path.join(file_root, filepath) # where the file is stored
+        filepath = download_obj.file.path
+        final_filepath = os.path.join(file_root, filepath)
         with open(final_filepath, 'rb') as f:
             wrapper = FileWrapper(f)
             mimetype = 'application/force-download'
-            gussed_mimetype = guess_type(filepath)[0] # filename.mp4
+            gussed_mimetype = guess_type(filepath)[0] 
             if gussed_mimetype:
                 mimetype = gussed_mimetype
             response = HttpResponse(wrapper, content_type=mimetype)
