@@ -34,6 +34,7 @@ def cancel_order(request,**kwargs):
         obj.cancellation()
         return redirect('orders:list')
     return render(request,'orders/cancel.html',context)
+    
 
 
     

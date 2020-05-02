@@ -17,7 +17,7 @@ ORDER_STATUS_CHOICES=[
     ('paid','Paid'),
     ('shipped','Shipped'),
     ('refunded','Refunded'),
-    ('cancelled,','Cancelled'),
+    ('cancelled','Cancelled'),
 ]
 
 class OrderManagerQuerySet(models.query.QuerySet):
